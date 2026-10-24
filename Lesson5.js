@@ -22,7 +22,7 @@ function updateClock(){
     const year = now.getFullYear();
 
     displayDate.textContent = 
-    (upperMonth) + " " + (day) + ", " + (year)
+    upperMonth + " " + day + ", " + year;
 
 }
 updateClock();
