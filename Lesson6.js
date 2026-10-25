@@ -5,47 +5,62 @@ const counter = document.querySelector("#counter");
 
 const addBtn = document.querySelector("#addBtn");
 
-
-addBtn.addEventListener("click", () =>{
+addBtn.addEventListener("click", ()=>{
     if(inputTask.value.trim() === ""){
-        message.textContent = "Enter Task!";
+        message.textContent = "Enter a Task!";
         return;
     }
-    message.textContent = "";
-    const newLI = document.createElement("li");
+        message.textContent = "";
+        const input = inputTask.value;
+    
+        const newLI = document.createElement('li');
+        newLI.textContent = taskList.value;
+    
+        
+        const taskText = document.createElement('span');
+        taskText.textContent = inputTask.value;
+    
+        const doneBtn = document.createElement('button');
+        doneBtn.textContent = "done";
+        
 
-    const taskText = document.createElement("span");
-    taskText.textContent = inputTask.value.trim();
-    
-  
-    const doneBtn = document.createElement("button");
-    doneBtn.textContent = "done";
-    doneBtn.className = "done-btn";
-    
-    doneBtn.addEventListener("click", ()=>{
-        if(taskText.style.textDecoration === "line-through"){
-            taskText.style.textDecoration = "none";
+        doneBtn.addEventListener("click", function(){
+        let taskCompleted = taskText.classList.toggle('completed');
+        completedTask();
+        if(taskCompleted){
+            taskText.style.textDecoration = 'line-through';
+            this.textContent = 'undo'
         }else{
-            taskText.style.textDecoration = "line-through";
+            taskText.style.textDecoration = 'none';
+            this.textContent = 'done'
         }
+        });
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = "delete";
 
-    });
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "delete"
-    deleteBtn.className = "delete-btn";
-
-    deleteBtn.addEventListener("click", () =>{
+        deleteBtn.addEventListener("click", ()=>{
             newLI.remove();
             counter.textContent = taskList.children.length;
-    });
+            completedTask();
+        });
 
-    
-    newLI.appendChild(taskText);
-    newLI.appendChild(doneBtn);
-    newLI.appendChild(deleteBtn);
-    taskList.appendChild(newLI);
+        inputTask.value = "";
 
-    counter.textContent = taskList.children.length;
-    inputTask.value = "";
+        newLI.appendChild(taskText);
+        newLI.appendChild(doneBtn);
+        newLI.appendChild(deleteBtn);
+        taskList.appendChild(newLI);
+        
+        completedTask();
 });
+
+function completedTask(){
+    let Completedtask = 0;
+    let taskDone = taskList.querySelectorAll('span');
+    for(let i= 0; i < taskDone.length; i++)
+        if(taskDone[i].classList.contains('completed')){
+            Completedtask++;
+        }
+       counter.textContent = taskDone.length - Completedtask;
+}

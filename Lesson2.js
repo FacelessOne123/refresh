@@ -7,6 +7,7 @@ const multiplication = document.querySelector("#multiplication");
 const division = document.querySelector("#division");
 
 const calculateBtn = document.querySelector("#calculateBtn");
+const clearBtn = document.querySelector("#clearBtn");
 const result = document.querySelector("#result");
 
     // operator statement
@@ -37,6 +38,13 @@ division.addEventListener("click", function(){
 
 });
 
+clearBtn.addEventListener("click", ()=>{
+    firstNumber.value = "";
+    secondNumber.value = "";
+    result.textContent = "";
+    return;
+});
+
 calculateBtn.addEventListener("click", function(){
     //checker if the input is empty
     if(number1.value === "" || number2.value === ""){
@@ -65,13 +73,14 @@ calculateBtn.addEventListener("click", function(){
         case "/" :{
             if(secondNumber === 0){
                 result.textContent = "Cannot divide to zero"
+                break;
             }else{
                 result.textContent = firstNumber / secondNumber;
                 break;
             }
         }
         default:
-            result.textContent = "Enter operator0";
+            result.textContent = "Enter operator";
     };
 
 
